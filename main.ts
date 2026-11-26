@@ -3,9 +3,12 @@
 // directory, then write /output/dossier.json with the kit's buildDossier.
 import { buildDossier } from "./vendor/makefun-game.ts";
 import { cpSync, mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const repoRoot = process.cwd();
+// The grader runs `node /bot/main.ts` from its own working directory, so the
+// repo root must come from this file's own location, never process.cwd().
+const repoRoot = dirname(fileURLToPath(import.meta.url));
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 
 mkdirSync(outDir, { recursive: true });
